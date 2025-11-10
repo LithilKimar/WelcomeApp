@@ -10,27 +10,27 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t react-app:latest .'
+                bat 'docker build -t react-app:latest .'
             }
         }
 
         stage('Deploy Container') {
             steps {
-                sh '''
-                docker stop react-container || true
-                docker rm react-container || true
+                bat '''
+                docker stop react-container || exit 0
+                docker rm react-container || exit 0
                 docker run -d -p 3000:80 --name react-container react-app:latest
                 '''
             }
