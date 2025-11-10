@@ -39,7 +39,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Deployment successful! App is running at http://localhost:3000'
+            echo '✅ Deployment successful! App is running at http://localhost:5173'
         }
         failure {
             echo '❌ Build failed. Check logs for details.'
