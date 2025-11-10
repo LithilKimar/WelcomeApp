@@ -8,30 +8,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
-
-        stage('Build React App') {
-            steps {
-                bat 'npm run build'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t welcomeapp:latest .'
+                bat 'docker build -t welcomeapp-dev:latest .'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Run Dev Container') {
             steps {
                 bat '''
-                docker stop welcomeapp-container || exit 0
-                docker rm welcomeapp-container || exit 0
-                docker run -d -p 5173:80 --name welcomeapp-container welcomeapp:latest
+                docker stop welcomeapp-dev || exit 0
+                docker rm welcomeapp-dev || exit 0
+                docker run -d -p 5173:5173 --name welcomeapp-dev welcomeapp-dev:latest
                 '''
             }
         }
@@ -39,10 +27,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Deployment successful! App is running at http://localhost:5173'
-        }
-        failure {
-            echo '❌ Build failed. Check logs for details.'
+            echo '✅ Development server running at http://localhost:5173'
         }
     }
 }
