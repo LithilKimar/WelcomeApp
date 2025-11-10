@@ -31,7 +31,7 @@ pipeline {
                 bat '''
                 docker stop react-container || exit 0
                 docker rm react-container || exit 0
-                docker run -d -p 3000:80 --name react-container react-app:latest
+                docker run -d -p 5173:5173 --name react-container react-app:latest
                 '''
             }
         }
